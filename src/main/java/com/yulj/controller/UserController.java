@@ -1,11 +1,12 @@
 package com.yulj.controller;
 
-
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yulj.entity.User;
 import com.yulj.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -25,7 +26,9 @@ public class UserController {
      */
     @PostMapping("save-user")
     public Object saveUser() {
-        return userService.save(new User().setName("小李").setAge(15));
+        return userService.save(
+                new User().setName("小李").setAge(15)
+        );
     }
 
     /**
@@ -42,6 +45,24 @@ public class UserController {
     @GetMapping("list-user")
     public Object listUser() {
         return userService.list();
+    }
+
+    /**
+     * @Description: 分页查询用户列表
+     */
+    @GetMapping("page-user")
+    public Object pageUser() {
+        return userService.page(new Page<>());
+    }
+
+    /**
+     * @Description: 保存用户（指定年龄）
+     */
+    @PostMapping("save-user-with-age")
+    public Object saveUserWithAge(@RequestParam Integer age) {
+        return userService.save(
+                new User().setName("小李").setAge(age)
+        );
     }
 
 }

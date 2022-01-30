@@ -18,7 +18,7 @@ CREATE TABLE `sys_dept`
     `phone`           varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '部门经理联系电话',
     `create_time`     datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
     `update_time`     datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
-    `deleted`         tinyint(4) NULL DEFAULT NULL COMMENT '是否删除(1未删除；0已删除)',
+    `deleted`         tinyint(4) NULL DEFAULT NULL COMMENT '是否删除(0未删除；1已删除)',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统部门' ROW_FORMAT = Dynamic;
 
