@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.yuj</groupId>
-    <artifactId>sharding-sphere-mybatis-plus-demo</artifactId>
+    <artifactId>ShardingSphere-MybatisPlus-demo</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
