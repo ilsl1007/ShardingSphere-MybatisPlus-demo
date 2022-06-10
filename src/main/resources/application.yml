@@ -25,40 +25,48 @@ spring:
     datasource:
       names: ds,ds0,ds1
       ds:
-        driver-class-name: com.mysql.cj.jdbc.Driver
         type: com.alibaba.druid.pool.DruidDataSource
-        url: jdbc:mysql://localhost:3306/ds?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2b8&rewriteBatchedStatements=true&allowMultiQueries=true
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/ds?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2b8&rewriteBatchedStatements=true&allowMultiQueries=true
         username: root
         password: root
       ds0:
-        driver-class-name: com.mysql.cj.jdbc.Driver
         type: com.alibaba.druid.pool.DruidDataSource
-        url: jdbc:mysql://localhost:3306/ds0?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2b8&rewriteBatchedStatements=true&allowMultiQueries=true
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/ds0?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2b8&rewriteBatchedStatements=true&allowMultiQueries=true
         username: root
         password: root
       ds1:
-        driver-class-name: com.mysql.cj.jdbc.Driver
         type: com.alibaba.druid.pool.DruidDataSource
-        url: jdbc:mysql://localhost:3306/ds1?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2b8&rewriteBatchedStatements=true&allowMultiQueries=true
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/ds1?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2b8&rewriteBatchedStatements=true&allowMultiQueries=true
         username: root
         password: root
-    ## 开启 SQL 打印
-    props:
-      sql:
-        show: true
-    sharding:
-      ## 默认数据源
-      default-data-source-name: ds
-      ## 数据库分片策略，按 ID 字段取模
-      default-database-strategy:
-        inline:
-          algorithm-expression: ds$->{id % 2}
-          sharding-column: id
-      tables:
-        tab_user:
-          actual-data-nodes: ds$->{0..1}.tab_user$->{0..1}
-          ## 表分片策略，ID 字段取模，按 age 字段取模
-          table-strategy:
-            inline:
+    rules:
+      sharding:
+        default-database-strategy:
+          standard:
+            sharding-column: id
+            sharding-algorithm-name: database-inline
+        binding-tables:
+          - tab_user
+        tables:
+          tab_user:
+            actual-data-nodes: ds$->{0..1}.tab_user$->{0..1}
+            table-strategy:
+              standard:
+                sharding-column: age
+                sharding-algorithm-name: tab_user-inline
+        sharding-algorithms:
+          database-inline:
+            type: INLINE
+            props:
+              algorithm-expression: ds$->{id % 2}
+          tab_user-inline:
+            type: INLINE
+            props:
               algorithm-expression: tab_user$->{age % 2}
-              sharding-column: age
+    mode:
+      type: Memory
+    props:
+      sql-show: true

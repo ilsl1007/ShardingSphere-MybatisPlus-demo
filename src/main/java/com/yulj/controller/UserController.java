@@ -1,6 +1,7 @@
 package com.yulj.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.common.collect.Lists;
 import com.yulj.entity.User;
 import com.yulj.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @Classname UserController
@@ -63,6 +67,16 @@ public class UserController {
         return userService.save(
                 new User().setName("小李").setAge(age)
         );
+    }
+
+    @PostMapping("saveBatch")
+    public Object saveBatch() {
+        List<User> users = Lists.newArrayList();
+        User user1 = new User().setAge(10).setName(UUID.randomUUID().toString());
+        users.add(user1);
+        User user2 = new User().setAge(12).setName(UUID.randomUUID().toString());
+        users.add(user2);
+        return this.userService.saveBatch(users);
     }
 
 }

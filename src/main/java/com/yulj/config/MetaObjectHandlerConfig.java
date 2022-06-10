@@ -4,9 +4,7 @@ import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashSet;
+import java.time.LocalDateTime;
 
 /**
  * @Classname MetaObjectHandlerConfig
@@ -19,49 +17,16 @@ public class MetaObjectHandlerConfig implements MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {
-        Date currentDate = new Date();
-        String[] setterNames = metaObject.getSetterNames();
-        HashSet<String> setterNameSet = new HashSet<>(Arrays.asList(setterNames));
-        if (setterNameSet.contains("deleted")) {
-            //默认未删除
-            setFieldValByName("deleted", 1, metaObject);
-        }
-        if (setterNameSet.contains("unableFlag")) {
-            //默认启用
-            setFieldValByName("unableFlag", 1, metaObject);
-        }
-        if (setterNameSet.contains("createTime")) {
-            //创建时间默认当前时间
-            setFieldValByName("createTime", currentDate, metaObject);
-        }
-        if (setterNameSet.contains("createDate")) {
-            //创建时间默认当前时间
-            setFieldValByName("createDate", currentDate, metaObject);
-        }
-        if (setterNameSet.contains("updateTime")) {
-            //创建时间默认当前时间
-            setFieldValByName("updateTime", currentDate, metaObject);
-        }
-        if (setterNameSet.contains("updateDate")) {
-            //创建时间默认当前时间
-            setFieldValByName("updateDate", currentDate, metaObject);
-        }
-
+        // 自动填充创建时间，对应数据库表 createTime 字段
+        this.strictInsertFill(metaObject, "createTime", LocalDateTime.class, LocalDateTime.now());
+        // 自动填充更新时间，对应数据库表 update_time 字段
+        this.strictUpdateFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now());
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        Date currentDate = new Date();
-        String[] setterNames = metaObject.getSetterNames();
-        HashSet<String> setterNameSet = new HashSet<>(Arrays.asList(setterNames));
-        if (setterNameSet.contains("updateTime")) {
-            //创建时间默认当前时间
-            setFieldValByName("updateTime", currentDate, metaObject);
-        }
-        if (setterNameSet.contains("updateDate")) {
-            //创建时间默认当前时间
-            setFieldValByName("updateDate", currentDate, metaObject);
-        }
+        // 自动填充更新时间，对应数据库表 update_time 字段
+        this.strictUpdateFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now());
     }
 
 }

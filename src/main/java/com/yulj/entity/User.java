@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @Classname User
@@ -18,6 +18,7 @@ import java.util.Date;
 @TableName("tab_user")
 @Accessors(chain = true)
 public class User {
+
     /**
      * 主键
      */
@@ -39,21 +40,20 @@ public class User {
     private Integer age;
 
     /**
-     *
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private Date createTime;
-
-    /**
-     *
-     */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date updateTime;
-
-    /**
      * 是否删除 1删除 0未删除
      */
+    private Boolean deleted;
+
+    /**
+     * 创建时间
+     */
     @TableField(fill = FieldFill.INSERT)
-    private Integer deleted;
+    private LocalDateTime createTime;
+
+    /**
+     * 更新时间
+     */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime updateTime;
 
 }
