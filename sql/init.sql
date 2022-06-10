@@ -18,7 +18,7 @@ CREATE TABLE `sys_dept`
     `phone`           varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '部门经理联系电话',
     `create_time`     datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
     `update_time`     datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
-    `deleted`         tinyint(4) NULL DEFAULT NULL COMMENT '是否删除(0未删除；1已删除)',
+    `deleted`         tinyint(4) NULL DEFAULT '0' COMMENT '是否删除(0未删除；1已删除)',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统部门' ROW_FORMAT = Dynamic;
 
@@ -32,7 +32,7 @@ CREATE TABLE `tab_user0`
     `age`         int(11) DEFAULT NULL COMMENT '年龄',
     `create_time` datetime    DEFAULT NULL COMMENT '创建时间',
     `update_time` datetime    DEFAULT NULL COMMENT '更新时间',
-    `deleted`     tinyint(1) DEFAULT '0' NULL COMMENT '是否删除 1删除 0未删除',
+    `deleted`     tinyint(1) DEFAULT '0' COMMENT '是否删除 1删除 0未删除',
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 DROP TABLE IF EXISTS `tab_user1`;
@@ -44,6 +44,6 @@ CREATE TABLE `tab_user1`
     `age`         int(11) DEFAULT NULL COMMENT '年龄',
     `create_time` datetime    DEFAULT NULL COMMENT '创建时间',
     `update_time` datetime    DEFAULT NULL COMMENT '更新时间',
-    `deleted`     tinyint(1) DEFAULT '0' NULL COMMENT '是否删除 1删除 0未删除',
+    `deleted`     tinyint(1) DEFAULT '0' COMMENT '是否删除 1删除 0未删除',
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
